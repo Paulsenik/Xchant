@@ -1,0 +1,14 @@
+name: Xchant
+version: '${project.version}'
+main: ooo.paulsen.mc.xchant.Xchant
+api-version: 1.19
+softdepend: [ Extended PvP ]
+authors: [ Paulsen ]
+description: Enchant items with extended limits
+website: https://paulsen.ooo/
+
+commands:
+  xchant:
+    description: Open Settings for "XChant"
+    usage: /<command>
+    permission: op
