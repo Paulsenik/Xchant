@@ -1,6 +1,7 @@
 package ooo.paulsen.mc.xchant;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,13 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Commands implements CommandExecutor, TabCompleter {
+
+    private static String head = ChatColor.GOLD + "[" + ChatColor.UNDERLINE + ChatColor.DARK_PURPLE + "Xchant" + ChatColor.RESET + ChatColor.GOLD + "]: ";
+
     @Override
     public boolean onCommand(CommandSender s, Command command, String label, String[] args) {
         if (args.length == 0) {
-            send(s, "\n/xchant [enchantment] : see whats required to level up item in hand");
+            send(s, ChatColor.AQUA + " > Enchant any item up to lvl 10 <",
+                    " Enchant by throwing required items onto Enchantment-Table",
+                    " Items Needed for 1 lvl-upgrade:",
+                    ChatColor.GOLD + " - 2 Playerheads",
+                    ChatColor.GOLD + " - 3 Diamonds",
+                    ChatColor.GOLD + " - Enchanted Book with the required entchantment",
+                    ChatColor.GOLD + " - Item which receives the enchantment");
             return true;
         } else if (args.length == 1) {
-            if (s instanceof Player) {
+            if (s instanceof Player && s.hasPermission("op") && ((Player) s).getGameMode() == GameMode.CREATIVE) {
                 ItemStack item = ((Player) s).getInventory().getItemInMainHand();
 
                 if (item != null && item.getType() != Material.ENCHANTED_BOOK) {
@@ -50,22 +60,29 @@ public class Commands implements CommandExecutor, TabCompleter {
                     }
 
                 }
+            } else {
+                send(s, "No valid message");
             }
         }
         return false;
     }
 
-    private void send(CommandSender s, String message) {
-        if (s instanceof Player)
-            s.sendMessage("[Xchant] :: " + message);
-        else
-            s.sendMessage(ChatColor.stripColor("[Xchant] :: " + message));
+    private void send(CommandSender s, String... message) {
+        if (s instanceof Player) {
+            s.sendMessage(head + message[0]);
+            for (int i = 1; i < message.length; i++)
+                s.sendMessage(message[i]);
+        } else {
+            s.sendMessage(ChatColor.stripColor(head + message[0]));
+            for (int i = 1; i < message.length; i++)
+                s.sendMessage(ChatColor.stripColor(message[i]));
+        }
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-        if (args.length == 1) {
+        if (args.length == 1 && sender.hasPermission("op")) {
             for (Enchantment e : Enchantment.values())
                 list.add(e.getKey().getKey());
         }

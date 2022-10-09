@@ -11,4 +11,3 @@ commands:
   xchant:
     description: Open Settings for "XChant"
     usage: /<command>
-    permission: op

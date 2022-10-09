@@ -2,22 +2,18 @@ package ooo.paulsen.mc.xchant;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 public final class Xchant extends JavaPlugin {
 
-    public static final int diamonds = 3, heads = 2;
-    public static final Material ground = Material.ENCHANTING_TABLE;
+    public static final Material GROUND = Material.ENCHANTING_TABLE;
+    public static final int DIAMONDS = 3, HEADS = 2;
+    public static final int MAX_LEVEL = 10;
 
     public static Xchant instance;
 
@@ -53,21 +49,25 @@ public final class Xchant extends JavaPlugin {
         sets Echantmentlvl of item 1 higher and for books the new stored-lvl.
      */
     public static void cleverUpEnchant(ItemStack item, Enchantment enchant) {
+
+        if (item == null || enchant == null)
+            return;
+
         if (item.getType() == Material.ENCHANTED_BOOK) {
 
             EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
-            int lvl = meta.getStoredEnchantLevel(Enchantment.DAMAGE_ALL);
+            int lvl = meta.getStoredEnchantLevel(enchant);
 
-            meta.addStoredEnchant(Enchantment.DAMAGE_ALL, lvl + 1, true);
+            meta.addStoredEnchant(enchant, lvl + 1, true);
             item.setItemMeta(meta);
 
         } else {
 
             ItemMeta meta = item.getItemMeta();
             if (meta != null) {
-                int lvl = meta.getEnchantLevel(Enchantment.DAMAGE_ALL);
+                int lvl = meta.getEnchantLevel(enchant);
 
-                meta.addEnchant(Enchantment.DAMAGE_ALL, lvl + 1, true);
+                meta.addEnchant(enchant, lvl + 1, true);
                 item.setItemMeta(meta);
             }
         }
