@@ -1,5 +1,9 @@
 package ooo.paulsen.mc.xchant;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -7,6 +11,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,6 +22,16 @@ import java.util.List;
 import java.util.Map;
 
 public class EnchantEvent implements Listener {
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+            TextComponent t = new TextComponent("/howto-xchant");
+            t.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/realPaulsen/Xchant"));
+            t.setColor(ChatColor.LIGHT_PURPLE);
+            t.setUnderlined(true);
+            t.setBold(true);
+
+            event.getPlayer().spigot().sendMessage(new ComponentBuilder().append(Commands.head + "Read how to use ").append(t).create());
+    }
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {

@@ -28,6 +28,7 @@ public final class Xchant extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EnchantEvent(), this);
         getCommand("xchant").setExecutor(new Commands());
         getCommand("xchant").setTabCompleter(new Commands());
+        getCommand("howto-xchant").setExecutor(new HowTo());
     }
 
     @Override

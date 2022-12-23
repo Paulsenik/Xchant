@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Commands implements CommandExecutor, TabCompleter {
 
-    private static String head = ChatColor.GOLD + "[" + ChatColor.UNDERLINE + ChatColor.DARK_PURPLE + "Xchant" + ChatColor.RESET + ChatColor.GOLD + "]: ";
+    public static String head = ChatColor.GOLD + "[" + ChatColor.UNDERLINE + ChatColor.DARK_PURPLE + "Xchant" + ChatColor.RESET + ChatColor.GOLD + "]: ";
 
     @Override
     public boolean onCommand(CommandSender s, Command command, String label, String[] args) {

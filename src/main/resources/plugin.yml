@@ -1,5 +1,5 @@
 name: Xchant
-version: '${project.version}'
+version: '1.1.0'
 main: ooo.paulsen.mc.xchant.Xchant
 api-version: 1.19
 softdepend: [ Extended PvP ]
@@ -9,5 +9,9 @@ website: https://paulsen.ooo/
 
 commands:
   xchant:
-    description: Open Settings for "XChant"
-    usage: /<command>
+    description: Open Settings for "Xchant"
+    usage: /<command> opens settings
+    permission: op
+  howto-xchant:
+    description: Open Manual for "Xchant"
+    usage: /<command> opens how-to-book
