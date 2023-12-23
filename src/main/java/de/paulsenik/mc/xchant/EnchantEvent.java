@@ -1,4 +1,4 @@
-package ooo.paulsen.mc.xchant;
+package de.paulsenik.mc.xchant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class EnchantEvent implements Listener {
           removeRitualItems(items);
 
           Xchant.cleverUpEnchant(enchantItem.getItemStack(), enchantment);
-          
+
           playEffects(item.getLocation());
       }
 

@@ -1,4 +1,4 @@
-package ooo.paulsen.mc.xchant;
+package de.paulsenik.mc.xchant;
 
 import java.util.ArrayList;
 import java.util.Arrays;

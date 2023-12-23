@@ -1,4 +1,4 @@
-package ooo.paulsen.mc.xchant;
+package de.paulsenik.mc.xchant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,14 +71,14 @@ public class Commands implements CommandExecutor, TabCompleter {
   private void send(CommandSender s, String... message) {
     if (s instanceof Player) {
       s.sendMessage(head + message[0]);
-        for (int i = 1; i < message.length; i++) {
-            s.sendMessage(message[i]);
-        }
+      for (int i = 1; i < message.length; i++) {
+        s.sendMessage(message[i]);
+      }
     } else {
       s.sendMessage(ChatColor.stripColor(head + message[0]));
-        for (int i = 1; i < message.length; i++) {
-            s.sendMessage(ChatColor.stripColor(message[i]));
-        }
+      for (int i = 1; i < message.length; i++) {
+        s.sendMessage(ChatColor.stripColor(message[i]));
+      }
     }
   }
 
@@ -87,9 +87,9 @@ public class Commands implements CommandExecutor, TabCompleter {
       String[] args) {
     ArrayList<String> list = new ArrayList<>();
     if (args.length == 1 && sender.hasPermission("op")) {
-        for (Enchantment e : Enchantment.values()) {
-            list.add(e.getKey().getKey());
-        }
+      for (Enchantment e : Enchantment.values()) {
+        list.add(e.getKey().getKey());
+      }
     }
     return filter(list, args[args.length - 1]);
 
@@ -99,9 +99,9 @@ public class Commands implements CommandExecutor, TabCompleter {
   private static List<String> filter(List<String> l, String arg) {
     ArrayList<String> nL = new ArrayList<>();
     for (String s : l) {
-        if (s.toLowerCase().contains(arg.toLowerCase())) {
-            nL.add(s);
-        }
+      if (s.toLowerCase().contains(arg.toLowerCase())) {
+        nL.add(s);
+      }
     }
     return nL;
   }

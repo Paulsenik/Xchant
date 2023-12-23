@@ -1,4 +1,4 @@
-package ooo.paulsen.mc.xchant;
+package de.paulsenik.mc.xchant;
 
 import java.util.logging.Logger;
 import org.bukkit.Material;
@@ -50,9 +50,9 @@ public final class Xchant extends JavaPlugin {
    */
   public static void cleverUpEnchant(ItemStack item, Enchantment enchant) {
 
-      if (item == null || enchant == null) {
-          return;
-      }
+    if (item == null || enchant == null) {
+      return;
+    }
 
     if (item.getType() == Material.ENCHANTED_BOOK) {
 
