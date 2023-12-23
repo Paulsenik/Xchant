@@ -7,27 +7,27 @@ Enchant any item up to **lvl 10** (default value) by dropping items on an **Ench
 <br>
 <div style="display: flex; justify-content: space-between">
 <div style="display: inline-block;">
-<img src="res/Enchanted_Diamond_Sword.gif">
+<img src="res/Enchanted_Diamond_Sword.gif" width="100">
 <p>Sharpness 5</p>
 </div>
 <p>+</p>
 <div style="display: inline-block;">
-<img src="res/Enchanted_Book.gif">
+<img src="res/Enchanted_Book.gif" width="100">
 <p>Sharpness 1</p>
 </div>
 <p>+</p>
 <div style="display: inline-block;">
-<img src="res/MHF_Steve.png">
+<img src="res/MHF_Steve.png" width="100">
 <p>Head/Skull</p>
 </div>
 <p>+</p>
 <div style="display: inline-block;">
-<img src="res/Diamond.png">
+<img src="res/Diamond.png" width="100">
 <p>3 Diamonds</p>
 </div>
 <p>=</p>
 <div style="display: inline-block;">
-<img src="res/Enchanted_Diamond_Sword.gif">
+<img src="res/Enchanted_Diamond_Sword.gif" width="100">
 <p>Sharpness 6</p>
 </div>
 </div>
