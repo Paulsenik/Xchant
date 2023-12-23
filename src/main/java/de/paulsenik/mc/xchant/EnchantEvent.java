@@ -1,5 +1,6 @@
 package de.paulsenik.mc.xchant;
 
+import de.paulsenik.mc.xchant.commands.XchantCommand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class EnchantEvent implements Listener {
     t.setBold(true);
 
     event.getPlayer().spigot().sendMessage(
-        new ComponentBuilder().append(Commands.head + "Read how to use ").append(t).create());
+        new ComponentBuilder().append(XchantCommand.head + "Read how to use ").append(t).create());
   }
 
   @EventHandler
@@ -83,7 +84,7 @@ public class EnchantEvent implements Listener {
 
           // Check lvl
           ItemMeta meta = enchantItem.getItemStack().getItemMeta();
-          if (meta.getEnchantLevel(enchantment) >= Xchant.MAX_LEVEL) {
+          if (meta == null || meta.getEnchantLevel(enchantment) >= Xchant.MAX_LEVEL) {
             return;
           }
 
@@ -94,7 +95,7 @@ public class EnchantEvent implements Listener {
           playEffects(item.getLocation());
       }
 
-    }, 80);
+    }, 4 * 20/*Ticks*/);
 
   }
 
@@ -220,8 +221,10 @@ public class EnchantEvent implements Listener {
   }
 
   private static void playEffects(Location l) {
-    l.getWorld().spawnParticle(Particle.SPELL_WITCH, l, 600);
-    l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, .15f, 1f);
+    if (l.getWorld() != null) {
+      l.getWorld().spawnParticle(Particle.SPELL_WITCH, l, 600);
+      l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, .15f, 1f);
+    }
   }
 
 }

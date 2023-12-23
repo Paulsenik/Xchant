@@ -22,7 +22,7 @@ public class HowTo implements CommandExecutor {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String s,
-      String[] strings) {
+      String[] args) {
     if (commandSender instanceof Player) {
       openBook((Player) commandSender);
       return true;
@@ -34,6 +34,9 @@ public class HowTo implements CommandExecutor {
   public static void generateBook() {
     howToBook = new ItemStack(Material.WRITTEN_BOOK);
     BookMeta bookMeta = (BookMeta) howToBook.getItemMeta();
+    if (bookMeta == null) {
+      return;
+    }
 
     bookMeta.setAuthor("Paulsen__");
     bookMeta.setTitle("How2 Xchant");
@@ -51,18 +54,21 @@ public class HowTo implements CommandExecutor {
         "        " + ChatColor.LIGHT_PURPLE + ChatColor.UNDERLINE + "<Xchant>\n" + ChatColor.RESET +
             ChatColor.GRAY + "      by Paulsenik\n\n" + ChatColor.RESET +
             ChatColor.BLACK + "Enchant any item over the normal limit by throwing "
-            + ChatColor.UNDERLINE + "7 items" + ChatColor.RESET + " onto an " + ChatColor.UNDERLINE
-            + "Enchantment-Table\n\n" + ChatColor.RESET +
-            "The Maximum level is " + ChatColor.GOLD + ChatColor.UNDERLINE + Xchant.MAX_LEVEL
-            + "\n\n" +
-            ChatColor.BLUE + ChatColor.UNDERLINE + "The 7 Items needed for 1 lvl-upgrade:");
+            + ChatColor.UNDERLINE + "items" + ChatColor.RESET + " on an "
+            + ChatColor.UNDERLINE + "Enchantment Table.\n\n" + ChatColor.RESET +
+            "The Maximum level for any item is " + ChatColor.GOLD + ChatColor.UNDERLINE
+            + Xchant.MAX_LEVEL + ChatColor.RESET + "."
+    );
     // Mainpage
 
-    pages.add(ChatColor.GOLD + "- " + Xchant.HEADS + " Playerheads\n" +
-        ChatColor.GOLD + "- " + Xchant.DIAMONDS + " Diamonds\n" +
-        ChatColor.GOLD + "- 1 Enchanted Book" + ChatColor.GRAY + " with the required enchantment\n"
-        +
-        ChatColor.GOLD + "- 1 Item" + ChatColor.GRAY + " which receives the enchantment");
+    pages.add("" +
+        ChatColor.BLUE + ChatColor.UNDERLINE + "Items for +1 lvl:\n\n" +
+        ChatColor.GOLD + "- 1 Enchanted Book" + ChatColor.GRAY
+        + "\n  with the desired\n  enchantment.\n" +
+        ChatColor.GOLD + "- Your Tool/Armor\n" +
+        ChatColor.GOLD + "- " + Xchant.HEADS + " Player/Mob Head\n" +
+        ChatColor.GOLD + "- " + Xchant.DIAMONDS + " Diamonds\n"
+    );
 
     return pages;
   }

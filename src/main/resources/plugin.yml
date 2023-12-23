@@ -10,7 +10,7 @@ website: https://paulsenik.de/
 commands:
   xchant:
     description: Open Settings for "Xchant"
-    usage: /<command> opens settings
+    usage: /<command> enchant items in your hands to any level
     permission: op
   howto-xchant:
     description: Open Manual for "Xchant"

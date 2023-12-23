@@ -1,5 +1,6 @@
 package de.paulsenik.mc.xchant;
 
+import de.paulsenik.mc.xchant.commands.XchantCommand;
 import java.util.logging.Logger;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -25,8 +26,9 @@ public final class Xchant extends JavaPlugin {
     load();
 
     getServer().getPluginManager().registerEvents(new EnchantEvent(), this);
-    getCommand("xchant").setExecutor(new Commands());
-    getCommand("xchant").setTabCompleter(new Commands());
+    XchantCommand xchant = new XchantCommand();
+    getCommand("xchant").setExecutor(xchant);
+    getCommand("xchant").setTabCompleter(xchant);
     getCommand("howto-xchant").setExecutor(new HowTo());
   }
 
@@ -35,43 +37,35 @@ public final class Xchant extends JavaPlugin {
     save();
   }
 
-  // config
-  public void load() {
-
-  }
-
-  // config
-  public void save() {
-
-  }
-
   /*
-      sets Echantmentlvl of item 1 higher and for books the new stored-lvl.
+      sets enchantment level of item 1 higher and for books the new stored-lvl.
    */
   public static void cleverUpEnchant(ItemStack item, Enchantment enchant) {
-
     if (item == null || enchant == null) {
       return;
     }
 
     if (item.getType() == Material.ENCHANTED_BOOK) {
-
       EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
-      int lvl = meta.getStoredEnchantLevel(enchant);
-
-      meta.addStoredEnchant(enchant, lvl + 1, true);
-      item.setItemMeta(meta);
-
+      if (meta != null) {
+        meta.addStoredEnchant(enchant, meta.getStoredEnchantLevel(enchant) + 1, true);
+        item.setItemMeta(meta);
+      }
     } else {
-
       ItemMeta meta = item.getItemMeta();
       if (meta != null) {
-        int lvl = meta.getEnchantLevel(enchant);
-
-        meta.addEnchant(enchant, lvl + 1, true);
+        meta.addEnchant(enchant, meta.getEnchantLevel(enchant) + 1, true);
         item.setItemMeta(meta);
       }
     }
+  }
+
+  public void load() {
+    // TODO
+  }
+
+  public void save() {
+    // TODO
   }
 
 }

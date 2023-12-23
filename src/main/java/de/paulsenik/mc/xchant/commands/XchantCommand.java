@@ -1,5 +1,6 @@
-package de.paulsenik.mc.xchant;
+package de.paulsenik.mc.xchant.commands;
 
+import de.paulsenik.mc.xchant.Xchant;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.ChatColor;
@@ -13,7 +14,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Commands implements CommandExecutor, TabCompleter {
+public class XchantCommand extends CommandEssentials implements
+    CommandExecutor, TabCompleter {
 
   public static String head =
       ChatColor.GOLD + "[" + ChatColor.UNDERLINE + ChatColor.DARK_PURPLE + "Xchant"
@@ -21,21 +23,12 @@ public class Commands implements CommandExecutor, TabCompleter {
 
   @Override
   public boolean onCommand(CommandSender s, Command command, String label, String[] args) {
-    if (args.length == 0) {
-      send(s, ChatColor.AQUA + " > Enchant any item up to lvl 10 <",
-          " Enchant by throwing required items onto Enchantment-Table",
-          " Items Needed for 1 lvl-upgrade:",
-          ChatColor.GOLD + " - 2 Playerheads",
-          ChatColor.GOLD + " - 3 Diamonds",
-          ChatColor.GOLD + " - Enchanted Book with the required entchantment",
-          ChatColor.GOLD + " - Item which receives the enchantment");
-      return true;
-    } else if (args.length == 1) {
+    if (args.length == 1) {
       if (s instanceof Player && s.hasPermission("op")
           && ((Player) s).getGameMode() == GameMode.CREATIVE) {
         ItemStack item = ((Player) s).getInventory().getItemInMainHand();
 
-        if (item != null && item.getType() != Material.ENCHANTED_BOOK) {
+        if (item.getType() != Material.ENCHANTED_BOOK) {
 
           Enchantment enchantment = null;
 
@@ -62,24 +55,10 @@ public class Commands implements CommandExecutor, TabCompleter {
 
         }
       } else {
-        send(s, "No valid message");
+        CommandEssentials.send(s, "No valid message");
       }
     }
     return false;
-  }
-
-  private void send(CommandSender s, String... message) {
-    if (s instanceof Player) {
-      s.sendMessage(head + message[0]);
-      for (int i = 1; i < message.length; i++) {
-        s.sendMessage(message[i]);
-      }
-    } else {
-      s.sendMessage(ChatColor.stripColor(head + message[0]));
-      for (int i = 1; i < message.length; i++) {
-        s.sendMessage(ChatColor.stripColor(message[i]));
-      }
-    }
   }
 
   @Override
@@ -91,18 +70,6 @@ public class Commands implements CommandExecutor, TabCompleter {
         list.add(e.getKey().getKey());
       }
     }
-    return filter(list, args[args.length - 1]);
-
-  }
-
-  // returns a list of possible commands according to the already (partly) typed command
-  private static List<String> filter(List<String> l, String arg) {
-    ArrayList<String> nL = new ArrayList<>();
-    for (String s : l) {
-      if (s.toLowerCase().contains(arg.toLowerCase())) {
-        nL.add(s);
-      }
-    }
-    return nL;
+    return CommandEssentials.filter(list, args[args.length - 1], false);
   }
 }
