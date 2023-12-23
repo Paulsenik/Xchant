@@ -1,7 +1,12 @@
 package de.paulsenik.mc.xchant;
 
 import de.paulsenik.mc.xchant.commands.XchantCommand;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.DrilldownPie;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +20,7 @@ public final class Xchant extends JavaPlugin {
   public static final int DIAMONDS = 3, HEADS = 1;
   public static final int MAX_LEVEL = 10;
   public static final int RITUAL_WAIT_INTERVALL = 80; // in TICKS
+  public static final boolean enabled = true;
 
   public static Xchant instance;
 
@@ -25,6 +31,7 @@ public final class Xchant extends JavaPlugin {
     instance = this;
     l = getLogger();
     load();
+    bStats();
 
     getServer().getPluginManager().registerEvents(new EnchantEvent(), this);
     XchantCommand xchant = new XchantCommand();
@@ -67,6 +74,26 @@ public final class Xchant extends JavaPlugin {
 
   public void save() {
     // TODO
+  }
+
+  private void bStats() {
+    int pluginId = 20544;
+    Metrics metrics = new Metrics(this, pluginId);
+
+    // Enabled/Disabled
+    metrics.addCustomChart(
+        new SimplePie("enabled", () -> enabled ? "enabled" : "disabled"));
+
+    // Rate
+    metrics.addCustomChart(new DrilldownPie("max_level", () -> {
+      Map<String, Map<String, Integer>> map = new HashMap<>();
+      String dropRate = String.valueOf(MAX_LEVEL);
+      Map<String, Integer> entry = new HashMap<>();
+      entry.put(dropRate, 1);
+      map.put(dropRate, entry);
+      return map;
+    }));
+
   }
 
 }
