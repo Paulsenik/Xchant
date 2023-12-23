@@ -9,8 +9,8 @@ website: https://paulsenik.de/
 
 commands:
   xchant:
-    description: Open Settings for "Xchant"
-    usage: /<command> enchant items in your hands to any level
+    description: Enchants item in hand
+    usage: /<command> [Enchantment] enchant items in your hands to any level
     permission: op
   howto-xchant:
     description: Open Manual for "Xchant"

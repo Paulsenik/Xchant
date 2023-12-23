@@ -2,14 +2,46 @@
 
 **A fun Enchantment-Plugin for minecraft**
 
-Enchant any item up to **lvl 10** by dropping items on an enchantment table.
+Enchant any item up to **lvl 10** (default value) by dropping items on an **Enchantment Table**.
 
-> /xchant : help
+<br>
+<div style="display: flex; justify-content: space-between">
+<div>
+<img src="res/Enchanted_Diamond_Sword.gif">
+<p>Sharpness 5</p>
+</div>
+<p>+</p>
+<div>
+<img src="res/Enchanted_Book.gif">
+<p>Sharpness 1</p>
+</div>
+<p>+</p>
+<div>
+<img src="res/MHF_Steve.png">
+<p>Head/Skull</p>
+</div>
+<p>+</p>
+<div>
+<img src="res/Diamond.png">
+<p>3 Diamonds</p>
+</div>
+<p>=</p>
+<div>
+<img src="res/Enchanted_Diamond_Sword.gif">
+<p>Sharpness 6</p>
+</div>
+</div>
 
-> /xchant [Enchantment] : upgrade item in hand (OP & CREATIVE only)
+## Required Items for 1 lvl upgrade:
 
-## **Required Items for 1 lvl upgrade**:
-- 3 Diamonds
-- 1 Player-Heads
-- 1 Enchanted book (with the required enchantment)
 - Any Item that receives the enchantment-upgrade
+- 1 Enchanted book (with the required enchantment)
+- 1 Head/Skull
+- 3 Diamonds
+
+## Commands
+
+> /howto-xchant : Open Manual for "Xchant"
+
+(OP & CREATIVE only)
+> /xchant [Enchantment] : upgrade item in hand
