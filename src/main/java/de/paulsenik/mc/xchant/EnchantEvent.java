@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,10 +45,9 @@ public class EnchantEvent implements Listener {
     scheduleGroundCheck(event.getItemDrop());
   }
 
-  private void scheduleGroundCheck(Item droppedItem) {
+  private void scheduleGroundCheck(Item item) {
     Bukkit.getScheduler().runTaskLater(Xchant.instance, () -> {
 
-      Item item = droppedItem;
       switch (item.getItemStack().getType()) {
         case DIAMOND:
         case PLAYER_HEAD:
@@ -80,9 +80,24 @@ public class EnchantEvent implements Listener {
 
           if (enchantGroundItems(items)) {
             // try ritual again
-            Item i = getEnchantItem(items);
-            if (i != null) {
-              scheduleGroundCheck(i);
+            List<Entity> l = item.getNearbyEntities(1, 1, 1);
+            for (Entity e : l) {
+              if (e instanceof Item) {
+                Item i = (Item) e;
+                switch (i.getItemStack().getType()) {
+                  case DIAMOND:
+                  case PLAYER_HEAD:
+                  case CREEPER_HEAD:
+                  case DRAGON_HEAD:
+                  case ZOMBIE_HEAD:
+                  case SKELETON_SKULL:
+                  case WITHER_SKELETON_SKULL:
+                  case ENCHANTED_BOOK:
+                    Xchant.l.info(i.getName());
+                    scheduleGroundCheck(i);
+                    return;
+                }
+              }
             }
           }
           break;
