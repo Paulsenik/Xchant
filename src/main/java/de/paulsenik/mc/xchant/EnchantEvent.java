@@ -15,7 +15,6 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,13 +41,21 @@ public class EnchantEvent implements Listener {
 
   @EventHandler
   public void onDrop(PlayerDropItemEvent event) {
+    scheduleGroundCheck(event.getItemDrop());
+  }
 
+  private void scheduleGroundCheck(Item droppedItem) {
     Bukkit.getScheduler().runTaskLater(Xchant.instance, () -> {
 
-      Item item = event.getItemDrop();
+      Item item = droppedItem;
       switch (item.getItemStack().getType()) {
         case DIAMOND:
         case PLAYER_HEAD:
+        case CREEPER_HEAD:
+        case DRAGON_HEAD:
+        case ZOMBIE_HEAD:
+        case SKELETON_SKULL:
+        case WITHER_SKELETON_SKULL:
         case ENCHANTED_BOOK:
 
           // is on Ground
@@ -64,45 +71,58 @@ public class EnchantEvent implements Listener {
 
           // Get nearby items
           List<Item> items = new ArrayList<>();
-          for (Entity e : item.getNearbyEntities(1, 1, 1)) {
+          items.add(item);
+          item.getNearbyEntities(1, 1, 1).forEach(e -> {
             if (e instanceof Item) {
               items.add((Item) e);
             }
+          });
+
+          if (enchantGroundItems(items)) {
+            // try ritual again
+            Item i = getEnchantItem(items);
+            if (i != null) {
+              scheduleGroundCheck(i);
+            }
           }
-          items.add(item);
-
-          // check items
-          if (items.size() < 2 || !checkAmounts(items)) {
-            return;
-          }
-
-          Item enchantItem = getEnchantItem(items);
-          Enchantment enchantment = getEnchantment(items);
-          if (enchantment == null || enchantItem == null) {
-            return;
-          }
-
-          // Check lvl
-          ItemMeta meta = enchantItem.getItemStack().getItemMeta();
-          if (meta == null || meta.getEnchantLevel(enchantment) >= Xchant.MAX_LEVEL) {
-            return;
-          }
-
-          removeRitualItems(items);
-
-          Xchant.cleverUpEnchant(enchantItem.getItemStack(), enchantment);
-
-          playEffects(item.getLocation());
+          break;
       }
 
-    }, 4 * 20/*Ticks*/);
+    }, Xchant.RITUAL_WAIT_INTERVALL);
+  }
 
+  private boolean enchantGroundItems(List<Item> items) {
+    // check items
+    if (!checkAmounts(items)) {
+      return false;
+    }
+
+    Item enchantItem = getEnchantItem(items);
+    Enchantment enchantment = getEnchantment(items);
+    if (enchantment == null || enchantItem == null) {
+      return false;
+    }
+
+    // Check lvl
+    ItemMeta meta = enchantItem.getItemStack().getItemMeta();
+    if (meta == null || meta.getEnchantLevel(enchantment) >= Xchant.MAX_LEVEL) {
+      return false;
+    }
+
+    removeRitualItems(items);
+    Xchant.cleverUpEnchant(enchantItem.getItemStack(), enchantment);
+    playEffects(items.get(0).getLocation());
+    return true;
   }
 
   /**
    * checks if the items are valid and enough for a ritual
    */
   private static boolean checkAmounts(List<Item> items) {
+    if (items.size() < 4) {
+      return false;
+    }
+
     int diamonds = Xchant.DIAMONDS;
     int heads = Xchant.HEADS;
     boolean hasBook = false, hasEnchantableItem = false;
@@ -114,6 +134,11 @@ public class EnchantEvent implements Listener {
           diamonds -= s.getAmount();
           break;
         case PLAYER_HEAD:
+        case CREEPER_HEAD:
+        case DRAGON_HEAD:
+        case ZOMBIE_HEAD:
+        case SKELETON_SKULL:
+        case WITHER_SKELETON_SKULL:
           heads -= s.getAmount();
           break;
         case ENCHANTED_BOOK:
@@ -151,6 +176,11 @@ public class EnchantEvent implements Listener {
           }
           break;
         case PLAYER_HEAD:
+        case CREEPER_HEAD:
+        case DRAGON_HEAD:
+        case ZOMBIE_HEAD:
+        case SKELETON_SKULL:
+        case WITHER_SKELETON_SKULL:
           if (heads > 0) {
             if (heads < itemStack.getAmount()) {
               itemStack.setAmount(itemStack.getAmount() - heads);
@@ -181,6 +211,11 @@ public class EnchantEvent implements Listener {
       switch (i.getItemStack().getType()) {
         case DIAMOND:
         case PLAYER_HEAD:
+        case CREEPER_HEAD:
+        case DRAGON_HEAD:
+        case ZOMBIE_HEAD:
+        case SKELETON_SKULL:
+        case WITHER_SKELETON_SKULL:
         case ENCHANTED_BOOK:
           continue;
         default:
@@ -201,20 +236,16 @@ public class EnchantEvent implements Listener {
         }
 
         try {
-
           Map<Enchantment, Integer> enchants = meta.getStoredEnchants();
           if (!enchants.isEmpty()) {
             return (Enchantment) enchants.keySet().toArray()[0];
           }
-
-        } catch (
-            RuntimeException e) { // Enchantment can be funky (catch is just in case something happens)
-          Xchant.instance.getLogger()
-              .warning("Something went wrong when trying to get the Enchantment of a Book");
-          e.printStackTrace();
+        } catch (RuntimeException e) {
+          // Enchantments can be funky (catch is just in case something happens)
+          Xchant.l.warning("Something went wrong when trying to get the Enchantment of a Book");
+          Xchant.l.warning(e.toString());
           return null;
         }
-
       }
     }
     return null;
@@ -223,7 +254,7 @@ public class EnchantEvent implements Listener {
   private static void playEffects(Location l) {
     if (l.getWorld() != null) {
       l.getWorld().spawnParticle(Particle.SPELL_WITCH, l, 600);
-      l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, .15f, 1f);
+      l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, 50f, 1f);
     }
   }
 
