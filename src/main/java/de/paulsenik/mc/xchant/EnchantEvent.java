@@ -269,7 +269,7 @@ public class EnchantEvent implements Listener {
   private static void playEffects(Location l) {
     if (l.getWorld() != null) {
       l.getWorld().spawnParticle(Particle.SPELL_WITCH, l, 600);
-      l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, 50f, 1f);
+      l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1f, 1f);
     }
   }
 
