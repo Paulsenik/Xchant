@@ -22,8 +22,8 @@ Enchant any item up to **lvl 10** (default value) by dropping items on an **Ench
 </div>
 <p>+</p>
 <div style="display: inline-block;">
-<img src="res/Diamond.png" width="100">
-<p>3 Diamonds</p>
+<img src="res/Netherite_Ingot.png" width="100">
+<p>1 Netherite Ingot</p>
 </div>
 <p>=</p>
 <div style="display: inline-block;">
