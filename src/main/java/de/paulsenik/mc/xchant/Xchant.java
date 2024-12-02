@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class Xchant extends JavaPlugin {
 
   public static final Material GROUND = Material.ENCHANTING_TABLE;
-  public static final int DIAMONDS = 3, HEADS = 1;
+  public static final int NETHERITE_AMOUNT = 1, HEAD_AMOUNT = 1;
   public static final int MAX_LEVEL = 10;
   public static final int RITUAL_WAIT_INTERVALL = 80; // in TICKS
   public static final boolean enabled = true;

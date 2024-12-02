@@ -138,14 +138,14 @@ public class EnchantEvent implements Listener {
       return false;
     }
 
-    int diamonds = Xchant.DIAMONDS;
-    int heads = Xchant.HEADS;
+    int diamonds = Xchant.NETHERITE_AMOUNT;
+    int heads = Xchant.HEAD_AMOUNT;
     boolean hasBook = false, hasEnchantableItem = false;
 
     for (Item i : items) {
       ItemStack s = i.getItemStack();
       switch (s.getType()) {
-        case DIAMOND:
+        case NETHERITE_INGOT:
           diamonds -= s.getAmount();
           break;
         case PLAYER_HEAD:
@@ -171,8 +171,8 @@ public class EnchantEvent implements Listener {
    * Only removes the items needed for the ritual
    */
   private void removeRitualItems(List<Item> items) {
-    int diamonds = Xchant.DIAMONDS;
-    int heads = Xchant.HEADS;
+    int diamonds = Xchant.NETHERITE_AMOUNT;
+    int heads = Xchant.HEAD_AMOUNT;
     boolean hasBook = false;
 
     for (Item i : items) {
