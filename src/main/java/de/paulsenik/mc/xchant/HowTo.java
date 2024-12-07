@@ -67,7 +67,7 @@ public class HowTo implements CommandExecutor {
         + "\n  with the desired\n  enchantment.\n" +
         ChatColor.GOLD + "- Your Tool/Armor\n" +
         ChatColor.GOLD + "- " + Xchant.HEAD_AMOUNT + " Player/Mob Head\n" +
-        ChatColor.GOLD + "- " + Xchant.NETHERITE_AMOUNT + " Netherite Ingot\n"
+        ChatColor.GOLD + "- " + Xchant.VALUABLE_AMOUNT + " Netherite Ingot\n"
     );
 
     return pages;

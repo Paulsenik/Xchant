@@ -49,7 +49,7 @@ public class EnchantEvent implements Listener {
     Bukkit.getScheduler().runTaskLater(Xchant.instance, () -> {
 
       switch (item.getItemStack().getType()) {
-        case DIAMOND:
+        case NETHERITE_INGOT:
         case PLAYER_HEAD:
         case CREEPER_HEAD:
         case DRAGON_HEAD:
@@ -85,7 +85,7 @@ public class EnchantEvent implements Listener {
               if (e instanceof Item) {
                 Item i = (Item) e;
                 switch (i.getItemStack().getType()) {
-                  case DIAMOND:
+                  case NETHERITE_INGOT:
                   case PLAYER_HEAD:
                   case CREEPER_HEAD:
                   case DRAGON_HEAD:
@@ -138,7 +138,7 @@ public class EnchantEvent implements Listener {
       return false;
     }
 
-    int diamonds = Xchant.NETHERITE_AMOUNT;
+    int valuableAmount = Xchant.VALUABLE_AMOUNT;
     int heads = Xchant.HEAD_AMOUNT;
     boolean hasBook = false, hasEnchantableItem = false;
 
@@ -146,7 +146,7 @@ public class EnchantEvent implements Listener {
       ItemStack s = i.getItemStack();
       switch (s.getType()) {
         case NETHERITE_INGOT:
-          diamonds -= s.getAmount();
+          valuableAmount -= s.getAmount();
           break;
         case PLAYER_HEAD:
         case CREEPER_HEAD:
@@ -164,28 +164,28 @@ public class EnchantEvent implements Listener {
       }
     }
 
-    return diamonds <= 0 && heads <= 0 && hasBook && hasEnchantableItem;
+    return valuableAmount <= 0 && heads <= 0 && hasBook && hasEnchantableItem;
   }
 
   /**
    * Only removes the items needed for the ritual
    */
   private void removeRitualItems(List<Item> items) {
-    int diamonds = Xchant.NETHERITE_AMOUNT;
+    int valuableAmount = Xchant.VALUABLE_AMOUNT;
     int heads = Xchant.HEAD_AMOUNT;
     boolean hasBook = false;
 
     for (Item i : items) {
       ItemStack itemStack = i.getItemStack();
       switch (itemStack.getType()) {
-        case DIAMOND:
-          if (diamonds > 0) {
-            if (diamonds < itemStack.getAmount()) {
-              itemStack.setAmount(itemStack.getAmount() - diamonds);
-              diamonds = 0;
+        case NETHERITE_INGOT:
+          if (valuableAmount > 0) {
+            if (valuableAmount < itemStack.getAmount()) {
+              itemStack.setAmount(itemStack.getAmount() - valuableAmount);
+              valuableAmount = 0;
             } else {
               int amount = itemStack.getAmount();
-              diamonds -= amount;
+              valuableAmount -= amount;
               itemStack.setAmount(itemStack.getAmount() - amount);
             }
           }
@@ -224,7 +224,7 @@ public class EnchantEvent implements Listener {
   private static Item getEnchantItem(List<Item> items) {
     for (Item i : items) {
       switch (i.getItemStack().getType()) {
-        case DIAMOND:
+        case NETHERITE_INGOT:
         case PLAYER_HEAD:
         case CREEPER_HEAD:
         case DRAGON_HEAD:
@@ -269,7 +269,7 @@ public class EnchantEvent implements Listener {
   private static void playEffects(Location l) {
     if (l.getWorld() != null) {
       l.getWorld().spawnParticle(Particle.SPELL_WITCH, l, 600);
-      l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1f, 1f);
+      l.getWorld().playSound(l, Sound.ENTITY_ELDER_GUARDIAN_CURSE, .5f, .4f);
     }
   }
 

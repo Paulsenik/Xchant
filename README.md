@@ -37,7 +37,7 @@ Enchant any item up to **lvl 10** (default value) by dropping items on an **Ench
 - Any Item that receives the enchantment-upgrade
 - 1 Enchanted book (with the required enchantment)
 - 1 Head/Skull
-- 3 Diamonds
+- 1 Netherite Ingot
 
 ## Commands
 
